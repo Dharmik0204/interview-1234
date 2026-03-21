@@ -15,7 +15,7 @@ const FeedbackPage = () => {
     const fetchInterview = async () => {
         const token = localStorage.getItem('token');
         try {
-            const res = await axios.get(`http://localhost:5000/api/interviews`, {
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/interviews`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const current = res.data.data.find(it => it._id === id);

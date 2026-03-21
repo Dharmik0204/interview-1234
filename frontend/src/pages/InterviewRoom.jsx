@@ -39,7 +39,7 @@ const InterviewRoom = () => {
     const fetchInterview = async () => {
         const token = localStorage.getItem('token');
         try {
-            const res = await axios.get(`http://localhost:5000/api/interviews`, {
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/interviews`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const current = res.data.data.find(it => it._id === id);
@@ -64,7 +64,7 @@ const InterviewRoom = () => {
         setLoading(true);
         const token = localStorage.getItem('token');
         try {
-            const res = await axios.post('http://localhost:5000/api/interviews/evaluate', {
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/interviews/evaluate`, {
                 interviewId: id,
                 questionId: interview.questions[currentIndex]._id,
                 userAnswer
@@ -85,7 +85,7 @@ const InterviewRoom = () => {
     const handleFinish = async () => {
         const token = localStorage.getItem('token');
         try {
-            await axios.put(`http://localhost:5000/api/interviews/${id}/finish`, {}, {
+            await axios.put(`${import.meta.env.VITE_API_URL}/api/interviews/${id}/finish`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             navigate(`/feedback/${id}`);
