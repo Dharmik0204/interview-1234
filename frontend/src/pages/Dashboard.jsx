@@ -21,7 +21,7 @@ const Dashboard = () => {
         setLoading(true);
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/interviews/generate`, {
+            const res = await axios.post('https://interview-ai-cr59.onrender.com/api/interviews/generate', {
                 role,
                 difficulty: 'Medium',
                 count: questionsCount

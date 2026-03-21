@@ -15,7 +15,7 @@ const History = () => {
     const fetchHistory = async () => {
         const token = localStorage.getItem('token');
         try {
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/interviews`, {
+            const res = await axios.get('https://interview-ai-cr59.onrender.com/api/interviews', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setInterviews(res.data.data);
