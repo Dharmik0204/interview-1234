@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
-import axios from 'axios';
+import api from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
@@ -20,13 +20,10 @@ const Dashboard = () => {
         if (!role) return;
         setLoading(true);
         try {
-            const token = localStorage.getItem('token');
-            const res = await axios.post('https://interview-ai-cr59.onrender.com/api/interviews/generate', {
+            const res = await api.post('/interviews/generate', {
                 role,
                 difficulty: 'Medium',
                 count: questionsCount
-            }, {
-                headers: { Authorization: `Bearer ${token}` }
             });
             navigate(`/interview/${res.data.data._id}`);
         } catch (err) {

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CheckCircle2, TrendingUp, Target, Award, ArrowLeft } from 'lucide-react';
-import axios from 'axios';
+import api from '../utils/api';
 
 const FeedbackPage = () => {
     const { id } = useParams();
@@ -13,11 +13,8 @@ const FeedbackPage = () => {
     }, [id]);
 
     const fetchInterview = async () => {
-        const token = localStorage.getItem('token');
         try {
-            const res = await axios.get('https://interview-ai-cr59.onrender.com/api/interviews', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const res = await api.get('/interviews');
             const current = res.data.data.find(it => it._id === id);
             setInterview(current);
         } catch (err) {

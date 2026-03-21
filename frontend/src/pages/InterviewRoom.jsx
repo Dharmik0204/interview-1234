@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mic, Send, Lightbulb, ChevronRight, ChevronLeft, StopCircle, RefreshCw } from 'lucide-react';
-import axios from 'axios';
+import api from '../utils/api';
 
 const InterviewRoom = () => {
     const { id } = useParams();
@@ -37,11 +37,8 @@ const InterviewRoom = () => {
     }, [id]);
 
     const fetchInterview = async () => {
-        const token = localStorage.getItem('token');
         try {
-            const res = await axios.get('https://interview-ai-cr59.onrender.com/api/interviews', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const res = await api.get('/interviews');
             const current = res.data.data.find(it => it._id === id);
             setInterview(current);
         } catch (err) {
@@ -62,14 +59,11 @@ const InterviewRoom = () => {
     const handleSubmitAnswer = async () => {
         if (!userAnswer) return;
         setLoading(true);
-        const token = localStorage.getItem('token');
         try {
-            const res = await axios.post('https://interview-ai-cr59.onrender.com/api/interviews/evaluate', {
+            const res = await api.post('/interviews/evaluate', {
                 interviewId: id,
                 questionId: interview.questions[currentIndex]._id,
                 userAnswer
-            }, {
-                headers: { Authorization: `Bearer ${token}` }
             });
             setFeedback(res.data.data);
             setIsSubmitted(true);
@@ -83,11 +77,8 @@ const InterviewRoom = () => {
     };
 
     const handleFinish = async () => {
-        const token = localStorage.getItem('token');
         try {
-            await axios.put(`https://interview-ai-cr59.onrender.com/api/interviews/${id}/finish`, {}, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            await api.put(`/interviews/${id}/finish`, {});
             navigate(`/feedback/${id}`);
         } catch (err) {
             console.error(err);

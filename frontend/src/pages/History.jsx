@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Plus, Clock, FileText, BarChart2, Briefcase } from 'lucide-react';
-import axios from 'axios';
+import api from '../utils/api';
 
 const History = () => {
     const [interviews, setInterviews] = useState([]);
@@ -13,11 +13,8 @@ const History = () => {
     }, []);
 
     const fetchHistory = async () => {
-        const token = localStorage.getItem('token');
         try {
-            const res = await axios.get('https://interview-ai-cr59.onrender.com/api/interviews', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const res = await api.get('/interviews');
             setInterviews(res.data.data);
         } catch (err) {
             console.error(err);
