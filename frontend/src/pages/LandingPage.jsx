@@ -9,10 +9,10 @@ const LandingPage = () => {
     ];
 
     const stats = [
-        { label: "Role Templates", value: "500+" },
-        { label: "Questions Generated", value: "10k+" },
+        { label: "Role Templates", value: "200+" },
+        { label: "Questions Generated", value: "100+" },
         { label: "Satisfaction Rate", value: "98%" },
-        { label: "Interview Success", value: "3x" }
+        { label: "Interview Success", value: "2x" }
     ];
 
     const steps = [
